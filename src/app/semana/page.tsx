@@ -7,15 +7,21 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { WeeklyDayCard } from "@/components/week/WeeklyDayCard";
 import { DayDetailDrawer } from "@/components/week/DayDetailDrawer";
 import { WeeklySchedulePreview } from "@/components/week/WeeklySchedulePreview";
+import { RoomTimeline } from "@/components/rooms/RoomTimeline";
+import { StayEditDrawer } from "@/components/rooms/StayEditDrawer";
+import { NewStayDrawer } from "@/components/rooms/NewStayDrawer";
 import { useWeeklyOperation } from "@/lib/hooks/useWeeklyOperation";
 import { todayISO } from "@/lib/dates";
-import { DailyOperation } from "@/lib/types";
+import { DailyOperation, RoomId, Stay } from "@/lib/types";
 
 export default function SemanaPage() {
   const today = todayISO();
   const { weekly } = useWeeklyOperation(today);
   const [selectedDay, setSelectedDay] = useState<DailyOperation | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [editingStay, setEditingStay] = useState<Stay | null>(null);
+  const [newStayOpen, setNewStayOpen] = useState(false);
+  const [newStayPrefill, setNewStayPrefill] = useState<{ roomId?: RoomId; date?: string }>({});
 
   return (
     <div>
@@ -31,9 +37,17 @@ export default function SemanaPage() {
         ))}
       </div>
 
-      <Button size="lg" className="mt-6 w-full" onClick={() => setPreviewOpen(true)}>
+      <Button size="lg" className="my-6 w-full" onClick={() => setPreviewOpen(true)}>
         <CalendarCheck size={18} /> Gerar cronograma da semana
       </Button>
+
+      <RoomTimeline
+        onBarClick={(stay) => setEditingStay(stay)}
+        onCellClick={(roomId, date) => {
+          setNewStayPrefill({ roomId, date });
+          setNewStayOpen(true);
+        }}
+      />
 
       <DayDetailDrawer
         operation={selectedDay}
@@ -45,6 +59,19 @@ export default function SemanaPage() {
         startDate={today}
         open={previewOpen}
         onClose={() => setPreviewOpen(false)}
+      />
+
+      <StayEditDrawer
+        stay={editingStay}
+        open={!!editingStay}
+        onClose={() => setEditingStay(null)}
+      />
+
+      <NewStayDrawer
+        open={newStayOpen}
+        onClose={() => setNewStayOpen(false)}
+        initialRoomId={newStayPrefill.roomId}
+        initialCheckInDate={newStayPrefill.date}
       />
     </div>
   );
