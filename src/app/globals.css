@@ -26,6 +26,9 @@
 
   --color-warn-600: #d99a2b;
   --color-warn-100: #fbf1dd;
+
+  --color-forest-900: #0b3b33;
+  --color-gold-400: #f7b733;
 }
 
 @theme inline {
@@ -52,6 +55,9 @@
   --color-alert-100: var(--color-alert-100);
   --color-warn-600: var(--color-warn-600);
   --color-warn-100: var(--color-warn-100);
+
+  --color-forest-900: var(--color-forest-900);
+  --color-gold-400: var(--color-gold-400);
 }
 
 body {

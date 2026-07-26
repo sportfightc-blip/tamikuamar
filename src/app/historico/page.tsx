@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Copy, Trash2, Inbox } from "lucide-react";
 import { Card } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Drawer } from "@/components/ui/Drawer";
 import { Button } from "@/components/ui/Button";
@@ -30,10 +31,7 @@ export default function HistoricoPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight text-sea-950">Histórico</h1>
-        <p className="mt-0.5 text-sm text-foreground/50">Cronogramas gerados anteriormente</p>
-      </div>
+      <PageHeader title="Histórico" subtitle="Cronogramas gerados anteriormente" />
 
       {schedules.length === 0 ? (
         <Card>

@@ -2,6 +2,7 @@
 
 import { Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CleaningChecklist } from "@/components/checklist/CleaningChecklist";
@@ -18,10 +19,7 @@ export default function ChecklistPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight text-sea-950">Checklist</h1>
-        <p className="mt-0.5 text-sm text-foreground/50">{formatFullDatePt(today)}</p>
-      </div>
+      <PageHeader title="Checklist" subtitle={formatFullDatePt(today)} />
 
       {operation.cleaning.length === 0 ? (
         <Card>

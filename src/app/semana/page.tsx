@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CalendarCheck } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { WeeklyDayCard } from "@/components/week/WeeklyDayCard";
 import { DayDetailDrawer } from "@/components/week/DayDetailDrawer";
 import { WeeklySchedulePreview } from "@/components/week/WeeklySchedulePreview";
@@ -18,10 +19,7 @@ export default function SemanaPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight text-sea-950">Semana</h1>
-        <p className="mt-0.5 text-sm text-foreground/50">Próximos 7 dias na pousada</p>
-      </div>
+      <PageHeader title="Semana" subtitle="Próximos 7 dias na pousada" />
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {weekly.summary.map((s, i) => (

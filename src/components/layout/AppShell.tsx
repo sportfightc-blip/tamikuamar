@@ -21,8 +21,15 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="flex min-h-dvh bg-background">
       <Sidebar onOpenSettings={() => setSettingsOpen(true)} />
 
-      <div className="flex min-h-dvh flex-1 flex-col">
-        <header className="flex items-center justify-between border-b border-sand-200 bg-white/70 px-4 py-3 sm:hidden">
+      <div className="relative flex min-h-dvh flex-1 flex-col bg-forest-900">
+        <img
+          src="/logo-mark.png"
+          alt=""
+          aria-hidden
+          className="pointer-events-none fixed bottom-[-30px] right-[-20px] z-0 w-[220px] opacity-95 sm:bottom-[-40px] sm:right-[-30px] sm:w-[340px]"
+        />
+
+        <header className="relative z-10 flex items-center justify-between border-b border-sand-200 bg-white/70 px-4 py-3 sm:hidden">
           <div className="flex items-center gap-2">
             <Logo size={24} />
             <span className="text-sm font-semibold text-sea-950">{settings.pousadaName}</span>
@@ -36,7 +43,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </button>
         </header>
 
-        <main className="flex-1 pb-24 sm:pb-8">
+        <main className="relative z-10 flex-1 pb-24 sm:pb-8">
           <div className="mx-auto w-full max-w-3xl px-4 py-6 sm:px-8">{children}</div>
         </main>
       </div>

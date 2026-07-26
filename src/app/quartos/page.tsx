@@ -7,6 +7,7 @@ import { RoomCard } from "@/components/rooms/RoomCard";
 import { RoomDrawer } from "@/components/rooms/RoomDrawer";
 import { NewStayDrawer } from "@/components/rooms/NewStayDrawer";
 import { Button } from "@/components/ui/Button";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { useStays } from "@/lib/hooks/useStays";
 import { getRoomStatusInfo } from "@/lib/operations";
 import { todayISO } from "@/lib/dates";
@@ -20,15 +21,15 @@ export default function QuartosPage() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-sea-950">Quartos</h1>
-          <p className="mt-0.5 text-sm text-foreground/50">Situação dos 6 quartos da pousada</p>
-        </div>
-        <Button variant="secondary" onClick={() => setNewStayOpen(true)}>
-          <Plus size={16} /> Nova hospedagem
-        </Button>
-      </div>
+      <PageHeader
+        title="Quartos"
+        subtitle="Situação dos 6 quartos da pousada"
+        action={
+          <Button variant="secondary" onClick={() => setNewStayOpen(true)}>
+            <Plus size={16} /> Nova hospedagem
+          </Button>
+        }
+      />
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {ROOMS.map((room) => (
