@@ -1,0 +1,46 @@
+"use client";
+
+import { Card } from "@/components/ui/Card";
+import { ProgressBar } from "@/components/ui/ProgressBar";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { CleaningChecklist } from "@/components/checklist/CleaningChecklist";
+import { useDailyOperation } from "@/lib/hooks/useDailyOperation";
+import { useTaskCompletions } from "@/lib/hooks/useTaskCompletions";
+import { formatFullDatePt, todayISO } from "@/lib/dates";
+
+export default function ChecklistPage() {
+  const today = todayISO();
+  const { operation } = useDailyOperation(today);
+  const { isCompleted } = useTaskCompletions();
+
+  const doneCount = operation.cleaning.filter((c) => isCompleted(today, c.roomId, c.type)).length;
+
+  return (
+    <div>
+      <div className="mb-6">
+        <h1 className="text-2xl font-semibold tracking-tight text-sea-950">Checklist</h1>
+        <p className="mt-0.5 text-sm text-foreground/50">{formatFullDatePt(today)}</p>
+      </div>
+
+      {operation.cleaning.length === 0 ? (
+        <Card>
+          <EmptyState message="✨ Nenhuma limpeza programada para hoje." />
+        </Card>
+      ) : (
+        <>
+          <Card className="mb-4">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-sm font-semibold text-sea-950">Progresso geral</span>
+              <span className="text-xs text-foreground/50">
+                {doneCount} de {operation.cleaning.length} concluídas
+              </span>
+            </div>
+            <ProgressBar value={doneCount} total={operation.cleaning.length} />
+          </Card>
+
+          <CleaningChecklist date={today} cleaning={operation.cleaning} />
+        </>
+      )}
+    </div>
+  );
+}

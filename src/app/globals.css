@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f9f8f4;
+  --foreground: #1c2b33;
+
+  --color-sea-950: #0b2740;
+  --color-sea-900: #0f3454;
+  --color-sea-800: #14456e;
+  --color-sea-700: #1a5786;
+  --color-sea-600: #2170a8;
+  --color-sea-500: #3b8bc4;
+  --color-sea-400: #7bb3d9;
+  --color-sea-100: #e3f0f8;
+  --color-sea-50: #f2f8fc;
+
+  --color-sand-50: #fbf9f4;
+  --color-sand-100: #f6f1e7;
+  --color-sand-200: #ede4d0;
+
+  --color-ok-600: #1f9d68;
+  --color-ok-100: #e2f6ec;
+
+  --color-alert-600: #d8483f;
+  --color-alert-100: #fbe8e6;
+
+  --color-warn-600: #d99a2b;
+  --color-warn-100: #fbf1dd;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-sea-950: var(--color-sea-950);
+  --color-sea-900: var(--color-sea-900);
+  --color-sea-800: var(--color-sea-800);
+  --color-sea-700: var(--color-sea-700);
+  --color-sea-600: var(--color-sea-600);
+  --color-sea-500: var(--color-sea-500);
+  --color-sea-400: var(--color-sea-400);
+  --color-sea-100: var(--color-sea-100);
+  --color-sea-50: var(--color-sea-50);
+
+  --color-sand-50: var(--color-sand-50);
+  --color-sand-100: var(--color-sand-100);
+  --color-sand-200: var(--color-sand-200);
+
+  --color-ok-600: var(--color-ok-600);
+  --color-ok-100: var(--color-ok-100);
+  --color-alert-600: var(--color-alert-600);
+  --color-alert-100: var(--color-alert-100);
+  --color-warn-600: var(--color-warn-600);
+  --color-warn-100: var(--color-warn-100);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-sea-100);
+  border-radius: 999px;
+}
+
+@layer components {
+  .input {
+    @apply h-11 w-full rounded-xl border border-sand-200 bg-white px-3 text-sm text-foreground outline-none ring-sea-500/30 transition-shadow focus:ring-4;
+  }
+}
+
