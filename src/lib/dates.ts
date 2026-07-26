@@ -108,3 +108,24 @@ export function formatWeekdayShortPt(iso: string) {
     month: MONTHS_SHORT[date.getMonth()].toUpperCase(),
   };
 }
+
+/** Ex: "julho 2026" */
+export function formatMonthYearPt(year: number, monthIndex0: number): string {
+  return `${MONTHS_FULL[monthIndex0]} ${year}`;
+}
+
+/** yyyy-MM-dd do primeiro dia do mês. */
+export function monthFirstDayISO(year: number, monthIndex0: number): string {
+  return toISODate(new Date(year, monthIndex0, 1));
+}
+
+/** Quantidade de dias no mês. */
+export function daysInMonth(year: number, monthIndex0: number): number {
+  return new Date(year, monthIndex0 + 1, 0).getDate();
+}
+
+/** Diferença em dias inteiros entre duas datas ISO (b - a). */
+export function diffDaysISO(a: string, b: string): number {
+  const msPerDay = 24 * 60 * 60 * 1000;
+  return Math.round((parseISODate(b).getTime() - parseISODate(a).getTime()) / msPerDay);
+}
