@@ -14,6 +14,7 @@ import {
   todayISO,
 } from "@/lib/dates";
 import { Stay } from "@/lib/types";
+import { ROOM_IDS } from "@/lib/rooms";
 
 const DAY_WIDTH = 36;
 const ROW_HEIGHT = 44;
@@ -92,6 +93,7 @@ export function RoomTimeline({
 
       <div className="flex">
         <div className="w-20 shrink-0 border-r border-sand-200">
+          <div className="h-6 border-b border-sand-200/60" />
           <div className="h-8 border-b border-sand-200" />
           {ROOMS.map((room) => (
             <div
@@ -106,6 +108,27 @@ export function RoomTimeline({
 
         <div className="flex-1 overflow-x-auto">
           <div style={{ width: numDays * DAY_WIDTH }}>
+            <div className="flex h-6 border-b border-sand-200/60">
+              {Array.from({ length: numDays }, (_, i) => i + 1).map((dayNum) => {
+                const iso = `${firstDay.slice(0, 8)}${String(dayNum).padStart(2, "0")}`;
+                const occupiedCount = new Set(
+                  activeStays
+                    .filter((s) => s.checkInDate <= iso && iso < s.checkOutDate)
+                    .map((s) => s.roomId),
+                ).size;
+                const pct = Math.round((occupiedCount / ROOM_IDS.length) * 100);
+                return (
+                  <div
+                    key={dayNum}
+                    className="flex shrink-0 items-center justify-center text-[9px] font-medium text-foreground/40"
+                    style={{ width: DAY_WIDTH }}
+                  >
+                    {pct}%
+                  </div>
+                );
+              })}
+            </div>
+
             <div className="flex h-8 border-b border-sand-200">
               {Array.from({ length: numDays }, (_, i) => i + 1).map((dayNum) => {
                 const iso = `${firstDay.slice(0, 8)}${String(dayNum).padStart(2, "0")}`;
@@ -172,7 +195,7 @@ export function RoomTimeline({
                         key={stay.id}
                         type="button"
                         onClick={() => onBarClick(stay)}
-                        className="absolute top-1.5 flex items-center overflow-hidden rounded-lg bg-sea-800 px-2 text-left text-xs font-medium text-white shadow-sm hover:bg-sea-900"
+                        className="absolute top-1.5 flex items-center justify-center overflow-hidden rounded-lg bg-ok-600 px-2 text-center text-xs font-medium text-white shadow-sm hover:opacity-90"
                         style={{
                           left: startIndex * DAY_WIDTH + 2,
                           width: spanDays * DAY_WIDTH - 4,
