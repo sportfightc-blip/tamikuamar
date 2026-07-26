@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Trash2 } from "lucide-react";
+import { Copy, Trash2, Inbox } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Drawer } from "@/components/ui/Drawer";
@@ -22,9 +22,9 @@ export default function HistoricoPage() {
   async function copy(message: string) {
     try {
       await navigator.clipboard.writeText(message);
-      show("✅ Mensagem copiada");
+      show("Mensagem copiada");
     } catch {
-      show("❌ Não foi possível copiar", "error");
+      show("Não foi possível copiar", "error");
     }
   }
 
@@ -37,7 +37,7 @@ export default function HistoricoPage() {
 
       {schedules.length === 0 ? (
         <Card>
-          <EmptyState message="🌊 Nenhum cronograma salvo ainda." />
+          <EmptyState icon={Inbox} message="Nenhum cronograma salvo ainda." />
         </Card>
       ) : (
         <div className="flex flex-col gap-3">
@@ -88,7 +88,7 @@ export default function HistoricoPage() {
             setSelected(null);
           }
           setConfirmDelete(null);
-          show("✅ Cronograma excluído");
+          show("Cronograma excluído");
         }}
       />
     </div>

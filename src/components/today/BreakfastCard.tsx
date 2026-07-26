@@ -1,4 +1,6 @@
+import { Coffee } from "lucide-react";
 import { Card } from "@/components/ui/Card";
+import { CardTitle } from "@/components/ui/CardTitle";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { BreakfastTotals } from "@/lib/types";
 import { formatPeopleCount, formatTableCount } from "@/lib/format";
@@ -6,7 +8,7 @@ import { formatPeopleCount, formatTableCount } from "@/lib/format";
 export function BreakfastCard({ breakfast }: { breakfast: BreakfastTotals }) {
   return (
     <Card className="mb-4">
-      <h2 className="mb-3 text-sm font-semibold text-sea-950">🍳 Café da manhã</h2>
+      <CardTitle icon={Coffee}>Café da manhã</CardTitle>
       {breakfast.totalPeople === 0 ? (
         <EmptyState message="Nenhum café programado." />
       ) : (

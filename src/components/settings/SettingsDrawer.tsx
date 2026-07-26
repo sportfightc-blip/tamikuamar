@@ -20,7 +20,7 @@ export function SettingsDrawer({ open, onClose }: { open: boolean; onClose: () =
 
   function save() {
     updateSettings(form);
-    show("✅ Configurações salvas");
+    show("Configurações salvas");
     onClose();
   }
 
@@ -29,7 +29,7 @@ export function SettingsDrawer({ open, onClose }: { open: boolean; onClose: () =
       <Drawer
         open={open}
         onClose={onClose}
-        title="⚙️ Configurações"
+        title="Configurações"
         footer={
           <>
             <Button variant="secondary" className="flex-1" onClick={onClose}>
@@ -112,7 +112,7 @@ export function SettingsDrawer({ open, onClose }: { open: boolean; onClose: () =
         onConfirm={() => {
           clearAllData();
           setConfirmClear(false);
-          show("✅ Dados limpos");
+          show("Dados limpos");
         }}
       />
     </>

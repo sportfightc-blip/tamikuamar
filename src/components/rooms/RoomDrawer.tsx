@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Users, StickyNote } from "lucide-react";
 import { Drawer } from "@/components/ui/Drawer";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { Button } from "@/components/ui/Button";
@@ -36,10 +37,10 @@ export function RoomDrawer({
   function handleSubmit(input: StayInput) {
     if (stay && !creatingNew) {
       updateStay(stay.id, input);
-      show("✅ Hospedagem salva");
+      show("Hospedagem salva");
     } else {
       addStay({ ...input, roomId: room.id });
-      show("✅ Hospedagem salva");
+      show("Hospedagem salva");
       setCreatingNew(false);
     }
     onClose();
@@ -52,8 +53,8 @@ export function RoomDrawer({
           <div className="flex flex-col gap-4">
             <div className="rounded-xl bg-sand-50 p-3 text-sm">
               <p className="font-medium text-foreground/85">{stay.guestName}</p>
-              <p className="mt-1 text-foreground/55">
-                👥 {formatPeopleCount(stayPeopleCount(stay))}
+              <p className="mt-1 flex items-center gap-1.5 text-foreground/55">
+                <Users size={14} /> {formatPeopleCount(stayPeopleCount(stay))}
               </p>
               <p className="text-foreground/55">
                 {formatShortDatePt(stay.checkInDate)} → {formatShortDatePt(stay.checkOutDate)}
@@ -61,7 +62,11 @@ export function RoomDrawer({
               <p className="text-foreground/55">
                 Check-in {stay.checkInTime} · Checkout {stay.checkOutTime}
               </p>
-              {stay.notes && <p className="mt-1 text-foreground/55">📝 {stay.notes}</p>}
+              {stay.notes && (
+                <p className="mt-1 flex items-start gap-1.5 text-foreground/55">
+                  <StickyNote size={14} className="mt-0.5 shrink-0" /> {stay.notes}
+                </p>
+              )}
             </div>
 
             {statusInfo.nextStay && (
@@ -115,7 +120,7 @@ export function RoomDrawer({
         onConfirm={() => {
           if (stay) releaseStay(stay.id);
           setConfirmRelease(false);
-          show("✅ Quarto liberado");
+          show("Quarto liberado");
           onClose();
         }}
       />

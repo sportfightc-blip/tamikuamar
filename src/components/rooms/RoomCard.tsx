@@ -1,3 +1,4 @@
+import { Users } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { RoomStatusBadge } from "./RoomStatusBadge";
 import { RoomStatusInfo, stayPeopleCount } from "@/lib/operations";
@@ -29,7 +30,9 @@ export function RoomCard({
       {stay ? (
         <div className="flex flex-col gap-1 text-sm">
           <p className="font-medium text-foreground/85">{stay.guestName}</p>
-          <p className="text-foreground/55">👥 {formatPeopleCount(stayPeopleCount(stay))}</p>
+          <p className="flex items-center gap-1.5 text-foreground/55">
+            <Users size={14} /> {formatPeopleCount(stayPeopleCount(stay))}
+          </p>
           <p className="text-foreground/55">
             {formatShortDatePt(stay.checkInDate)} → {formatShortDatePt(stay.checkOutDate)}
           </p>

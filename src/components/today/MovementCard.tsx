@@ -1,4 +1,6 @@
+import { ArrowRightLeft, LogIn, LogOut, DoorClosed } from "lucide-react";
 import { Card } from "@/components/ui/Card";
+import { CardTitle } from "@/components/ui/CardTitle";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { MovementItem } from "@/lib/types";
 
@@ -15,14 +17,16 @@ export function MovementCard({
 
   return (
     <Card className="mb-4">
-      <h2 className="mb-3 text-sm font-semibold text-sea-950">🚪 Movimentação</h2>
+      <CardTitle icon={ArrowRightLeft}>Movimentação</CardTitle>
       {empty ? (
         <EmptyState message="Nenhuma entrada ou saída hoje." />
       ) : (
         <div className="flex flex-col gap-3">
           {checkouts.length > 0 && (
             <div>
-              <p className="mb-1.5 text-xs font-medium text-alert-600">🔴 Saída</p>
+              <p className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-alert-600">
+                <LogOut size={14} /> Saída
+              </p>
               <ul className="flex flex-col gap-1">
                 {checkouts.map((m) => (
                   <li key={m.roomId} className="flex justify-between text-sm">
@@ -35,7 +39,9 @@ export function MovementCard({
           )}
           {checkins.length > 0 && (
             <div>
-              <p className="mb-1.5 text-xs font-medium text-sea-700">🔵 Entrada</p>
+              <p className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-sea-700">
+                <LogIn size={14} /> Entrada
+              </p>
               <ul className="flex flex-col gap-1">
                 {checkins.map((m) => (
                   <li key={m.roomId} className="flex justify-between text-sm">
@@ -48,7 +54,9 @@ export function MovementCard({
           )}
           {occupied.length > 0 && (
             <div>
-              <p className="mb-1.5 text-xs font-medium text-ok-600">🟢 Ocupados</p>
+              <p className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-ok-600">
+                <DoorClosed size={14} /> Ocupados
+              </p>
               <ul className="flex flex-col gap-1">
                 {occupied.map((m) => (
                   <li key={m.roomId} className="text-sm font-medium text-foreground/85">

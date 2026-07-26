@@ -1,12 +1,13 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
-import { Settings, Waves } from "lucide-react";
+import { Settings } from "lucide-react";
 import { Sidebar } from "./Sidebar";
 import { MobileBottomNav } from "./MobileBottomNav";
 import { SettingsDrawer } from "@/components/settings/SettingsDrawer";
 import { useSettings } from "@/lib/hooks/useSettings";
 import { seedDemoData } from "@/lib/db/seed";
+import { Logo } from "@/components/ui/Logo";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -23,7 +24,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex min-h-dvh flex-1 flex-col">
         <header className="flex items-center justify-between border-b border-sand-200 bg-white/70 px-4 py-3 sm:hidden">
           <div className="flex items-center gap-2">
-            <Waves className="text-sea-700" size={22} />
+            <Logo size={24} />
             <span className="text-sm font-semibold text-sea-950">{settings.pousadaName}</span>
           </div>
           <button

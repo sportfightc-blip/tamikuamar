@@ -1,3 +1,4 @@
+import { Coffee, Sparkles, LogIn, LogOut } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Schedule, DailyOperation, WeeklyOperation } from "@/lib/types";
@@ -23,10 +24,18 @@ export function HistoryCard({ schedule, onClick }: { schedule: Schedule; onClick
       </div>
       {isDaily(snapshot) ? (
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-foreground/60">
-          <span>🍳 {snapshot.breakfast.totalPeople} pessoas</span>
-          <span>🧹 {snapshot.cleaning.length} limpezas</span>
-          <span>🔵 {snapshot.checkins.length} entradas</span>
-          <span>🔴 {snapshot.checkouts.length} saídas</span>
+          <span className="flex items-center gap-1.5">
+            <Coffee size={14} /> {snapshot.breakfast.totalPeople} pessoas
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Sparkles size={14} /> {snapshot.cleaning.length} limpezas
+          </span>
+          <span className="flex items-center gap-1.5">
+            <LogIn size={14} /> {snapshot.checkins.length} entradas
+          </span>
+          <span className="flex items-center gap-1.5">
+            <LogOut size={14} /> {snapshot.checkouts.length} saídas
+          </span>
         </div>
       ) : (
         <p className="text-sm text-foreground/60">Cronograma de 7 dias</p>

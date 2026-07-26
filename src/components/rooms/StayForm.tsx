@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { StayInput } from "@/lib/hooks/useStays";
 import { todayISO } from "@/lib/dates";
@@ -133,8 +134,16 @@ export function StayForm({
         />
       </Field>
 
-      {dateError && <p className="text-sm font-medium text-alert-600">⚠️ {dateError}</p>}
-      {conflictError && <p className="text-sm font-medium text-alert-600">⚠️ {conflictError}</p>}
+      {dateError && (
+        <p className="flex items-center gap-1.5 text-sm font-medium text-alert-600">
+          <AlertTriangle size={15} /> {dateError}
+        </p>
+      )}
+      {conflictError && (
+        <p className="flex items-center gap-1.5 text-sm font-medium text-alert-600">
+          <AlertTriangle size={15} /> {conflictError}
+        </p>
+      )}
 
       <div className="mt-1 flex gap-2">
         <Button type="button" variant="secondary" className="flex-1" onClick={onCancel}>

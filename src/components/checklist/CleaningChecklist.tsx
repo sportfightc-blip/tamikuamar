@@ -1,3 +1,4 @@
+import { CheckCircle2 } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { TaskItem } from "./TaskItem";
@@ -22,7 +23,11 @@ export function CleaningChecklist({ date, cleaning }: { date: string; cleaning: 
           <Card key={roomId}>
             <div className="mb-3 flex items-center justify-between">
               <h3 className="text-sm font-semibold text-sea-950">{roomName}</h3>
-              {allDone && <Badge tone="ok">✅ Quarto pronto</Badge>}
+              {allDone && (
+                <Badge tone="ok">
+                  <CheckCircle2 size={13} /> Quarto pronto
+                </Badge>
+              )}
             </div>
             <div className="flex flex-col gap-2">
               {items.map((item) => (

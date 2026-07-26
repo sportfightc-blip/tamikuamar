@@ -18,9 +18,9 @@ export function WhatsAppMessagePreview({
   async function copy() {
     try {
       await navigator.clipboard.writeText(message);
-      show("✅ Mensagem copiada");
+      show("Mensagem copiada");
     } catch {
-      show("❌ Não foi possível copiar", "error");
+      show("Não foi possível copiar", "error");
     }
   }
 
@@ -46,7 +46,7 @@ export function WhatsAppMessagePreview({
         <Button
           onClick={() => {
             onSave(message);
-            show("✅ Cronograma salvo");
+            show("Cronograma salvo");
           }}
         >
           <Save size={16} /> Salvar

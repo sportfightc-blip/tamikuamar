@@ -1,5 +1,6 @@
 "use client";
 
+import { Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -24,7 +25,7 @@ export default function ChecklistPage() {
 
       {operation.cleaning.length === 0 ? (
         <Card>
-          <EmptyState message="✨ Nenhuma limpeza programada para hoje." />
+          <EmptyState icon={Sparkles} message="Nenhuma limpeza programada para hoje." />
         </Card>
       ) : (
         <>

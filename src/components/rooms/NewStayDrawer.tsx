@@ -18,7 +18,7 @@ export function NewStayDrawer({ open, onClose }: { open: boolean; onClose: () =>
 
   function handleSubmit(input: StayInput) {
     addStay({ ...input, roomId });
-    show("✅ Hospedagem salva");
+    show("Hospedagem salva");
     onClose();
   }
 

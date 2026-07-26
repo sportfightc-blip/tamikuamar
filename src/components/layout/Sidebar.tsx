@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Settings, Waves } from "lucide-react";
+import { Settings } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { NAV_ITEMS } from "@/lib/nav";
 import { useSettings } from "@/lib/hooks/useSettings";
+import { Logo } from "@/components/ui/Logo";
 
 export function Sidebar({ onOpenSettings }: { onOpenSettings: () => void }) {
   const pathname = usePathname();
@@ -14,7 +15,7 @@ export function Sidebar({ onOpenSettings }: { onOpenSettings: () => void }) {
   return (
     <aside className="hidden w-64 shrink-0 flex-col border-r border-sand-200 bg-white/70 px-4 py-6 sm:flex">
       <div className="mb-8 flex items-center gap-2 px-2">
-        <Waves className="text-sea-700" size={26} />
+        <Logo size={28} />
         <div>
           <p className="text-sm font-semibold leading-tight text-sea-950">
             {settings.pousadaName}
