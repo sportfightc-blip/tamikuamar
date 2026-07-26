@@ -6,12 +6,12 @@ import { StayForm } from "./StayForm";
 import { useStays, StayInput } from "@/lib/hooks/useStays";
 import { useSettings } from "@/lib/hooks/useSettings";
 import { useToast } from "@/components/ui/toast";
-import { hasBookingConflict } from "@/lib/operations";
+import { findConflictingStay } from "@/lib/operations";
 import { ROOMS } from "@/lib/rooms";
-import { RoomId } from "@/lib/types";
+import { RoomId, Stay } from "@/lib/types";
 
 export function NewStayDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { stays, addStay } = useStays();
+  const { stays, addStay, releaseStay } = useStays();
   const { settings } = useSettings();
   const { show } = useToast();
   const [roomId, setRoomId] = useState<RoomId>(ROOMS[0].id);
@@ -20,6 +20,11 @@ export function NewStayDrawer({ open, onClose }: { open: boolean; onClose: () =>
     addStay({ ...input, roomId });
     show("Hospedagem salva");
     onClose();
+  }
+
+  function handleCancelConflict(conflictStay: Stay) {
+    releaseStay(conflictStay.id);
+    show("Hospedagem conflitante cancelada");
   }
 
   return (
@@ -43,9 +48,10 @@ export function NewStayDrawer({ open, onClose }: { open: boolean; onClose: () =>
         <StayForm
           defaultCheckInTime={settings.defaultCheckInTime}
           defaultCheckOutTime={settings.defaultCheckOutTime}
-          checkConflict={(ci, co) => hasBookingConflict(roomId, ci, co, stays)}
+          checkConflict={(ci, co) => findConflictingStay(roomId, ci, co, stays)}
           onSubmit={handleSubmit}
           onCancel={onClose}
+          onCancelConflictingStay={handleCancelConflict}
           submitLabel="Salvar hospedagem"
         />
       </div>

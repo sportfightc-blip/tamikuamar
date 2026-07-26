@@ -106,6 +106,24 @@ export function getCleaningTasks(date: string, stays: Stay[]): CleaningItem[] {
   return [...faxinas, ...arrumacoes];
 }
 
+/** Retorna a hospedagem existente que conflita com o período informado, se houver. */
+export function findConflictingStay(
+  roomId: RoomId,
+  startDate: string,
+  endDate: string,
+  stays: Stay[],
+  excludeStayId?: string,
+): Stay | null {
+  return (
+    activeStays(stays).find((s) => {
+      if (s.roomId !== roomId) return false;
+      if (excludeStayId && s.id === excludeStayId) return false;
+      // Sobreposição de intervalos [start,end) x [s.checkInDate, s.checkOutDate)
+      return startDate < s.checkOutDate && endDate > s.checkInDate;
+    }) ?? null
+  );
+}
+
 export function hasBookingConflict(
   roomId: RoomId,
   startDate: string,
@@ -113,12 +131,7 @@ export function hasBookingConflict(
   stays: Stay[],
   excludeStayId?: string,
 ): boolean {
-  return activeStays(stays).some((s) => {
-    if (s.roomId !== roomId) return false;
-    if (excludeStayId && s.id === excludeStayId) return false;
-    // Sobreposição de intervalos [start,end) x [s.checkInDate, s.checkOutDate)
-    return startDate < s.checkOutDate && endDate > s.checkInDate;
-  });
+  return findConflictingStay(roomId, startDate, endDate, stays, excludeStayId) !== null;
 }
 
 export function getDailyOperation(date: string, stays: Stay[], settings: Settings): DailyOperation {

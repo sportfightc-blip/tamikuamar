@@ -4,7 +4,10 @@ import { useState } from "react";
 import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { StayInput } from "@/lib/hooks/useStays";
-import { todayISO } from "@/lib/dates";
+import { todayISO, formatShortDatePt } from "@/lib/dates";
+import { formatPeopleCount } from "@/lib/format";
+import { stayPeopleCount } from "@/lib/operations";
+import { Stay } from "@/lib/types";
 
 export function StayForm({
   initial,
@@ -13,14 +16,16 @@ export function StayForm({
   checkConflict,
   onSubmit,
   onCancel,
+  onCancelConflictingStay,
   submitLabel = "Salvar",
 }: {
   initial?: Partial<StayInput>;
   defaultCheckInTime: string;
   defaultCheckOutTime: string;
-  checkConflict?: (checkInDate: string, checkOutDate: string) => boolean;
+  checkConflict?: (checkInDate: string, checkOutDate: string) => Stay | null;
   onSubmit: (input: StayInput) => void;
   onCancel: () => void;
+  onCancelConflictingStay?: (stay: Stay) => void;
   submitLabel?: string;
 }) {
   const [guestName, setGuestName] = useState(initial?.guestName ?? "");
@@ -33,10 +38,7 @@ export function StayForm({
   const [notes, setNotes] = useState(initial?.notes ?? "");
 
   const dateError = checkOutDate <= checkInDate ? "A saída deve ser depois da entrada." : null;
-  const conflictError =
-    !dateError && checkConflict?.(checkInDate, checkOutDate)
-      ? "Este quarto já possui uma hospedagem neste período."
-      : null;
+  const conflictingStay = !dateError ? checkConflict?.(checkInDate, checkOutDate) ?? null : null;
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -139,17 +141,36 @@ export function StayForm({
           <AlertTriangle size={15} /> {dateError}
         </p>
       )}
-      {conflictError && (
-        <p className="flex items-center gap-1.5 text-sm font-medium text-alert-600">
-          <AlertTriangle size={15} /> {conflictError}
-        </p>
+
+      {conflictingStay && (
+        <div className="flex flex-col gap-2 rounded-xl bg-alert-100 p-3">
+          <p className="flex items-center gap-1.5 text-sm font-medium text-alert-600">
+            <AlertTriangle size={15} /> Este quarto já possui uma hospedagem neste período.
+          </p>
+          <p className="text-sm text-alert-600/80">
+            {conflictingStay.guestName} · {formatPeopleCount(stayPeopleCount(conflictingStay))} ·{" "}
+            {formatShortDatePt(conflictingStay.checkInDate)} →{" "}
+            {formatShortDatePt(conflictingStay.checkOutDate)}
+          </p>
+          {onCancelConflictingStay && (
+            <Button
+              type="button"
+              variant="danger"
+              size="sm"
+              className="self-start"
+              onClick={() => onCancelConflictingStay(conflictingStay)}
+            >
+              Cancelar essa hospedagem
+            </Button>
+          )}
+        </div>
       )}
 
       <div className="mt-1 flex gap-2">
         <Button type="button" variant="secondary" className="flex-1" onClick={onCancel}>
           Cancelar
         </Button>
-        <Button type="submit" className="flex-1" disabled={!!dateError || !!conflictError}>
+        <Button type="submit" className="flex-1" disabled={!!dateError || !!conflictingStay}>
           {submitLabel}
         </Button>
       </div>
