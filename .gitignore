@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .claude/settings.local.json
+
+# unrelated sibling project from another session, not part of this repo
+/massoterapia
