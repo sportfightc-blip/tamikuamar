@@ -38,11 +38,12 @@ function staysCoveringDate(stays: Stay[], roomId: RoomId, date: string): Stay[] 
 
 /**
  * Hóspedes que tomam café no dia informado.
- * Regra: já fez check-in (checkInDate < date) e ainda não é dia de checkout (date < checkOutDate).
+ * Regra: já fez check-in (checkInDate < date) e a saída é naquele dia ou depois (date <= checkOutDate).
+ * Ou seja, o dia do checkout ainda conta café da manhã.
  */
 export function getGuestsForBreakfast(date: string, stays: Stay[]): Stay[] {
   return activeStays(stays).filter(
-    (s) => s.checkInDate < date && date < s.checkOutDate,
+    (s) => s.checkInDate < date && date <= s.checkOutDate,
   );
 }
 
