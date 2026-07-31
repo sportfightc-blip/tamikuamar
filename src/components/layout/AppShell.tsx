@@ -1,21 +1,16 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import { Settings } from "lucide-react";
 import { Sidebar } from "./Sidebar";
 import { MobileBottomNav } from "./MobileBottomNav";
 import { SettingsDrawer } from "@/components/settings/SettingsDrawer";
 import { useSettings } from "@/lib/hooks/useSettings";
-import { seedDemoData } from "@/lib/db/seed";
 import { Logo } from "@/components/ui/Logo";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const { settings } = useSettings();
-
-  useEffect(() => {
-    seedDemoData();
-  }, []);
 
   return (
     <div className="flex min-h-dvh bg-background">

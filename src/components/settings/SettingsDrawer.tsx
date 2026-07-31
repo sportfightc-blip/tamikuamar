@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { useSettings } from "@/lib/hooks/useSettings";
 import { useToast } from "@/components/ui/toast";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
-import { clearAllData } from "@/lib/db/seed";
+import { supabase } from "@/lib/supabase/client";
 
 export function SettingsDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { settings, updateSettings } = useSettings();
@@ -109,10 +109,13 @@ export function SettingsDrawer({ open, onClose }: { open: boolean; onClose: () =
         confirmLabel="Limpar dados"
         danger
         onCancel={() => setConfirmClear(false)}
-        onConfirm={() => {
-          clearAllData();
+        onConfirm={async () => {
+          const { error } = await supabase
+            .from("stays")
+            .delete()
+            .gte("created_at", "1970-01-01");
           setConfirmClear(false);
-          show("Dados limpos");
+          show(error ? "Não foi possível limpar os dados" : "Dados limpos", error ? "error" : "success");
         }}
       />
     </>

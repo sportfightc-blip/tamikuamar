@@ -1,36 +1,56 @@
 "use client";
 
-import { v4 as uuid } from "uuid";
-import { schedulesCollection } from "../db/collections";
-import { useCollection } from "./useCollection";
+import { useMemo } from "react";
+import { supabase } from "../supabase/client";
+import { useSupabaseTable } from "./useSupabaseTable";
 import { DailyOperation, Schedule, ScheduleType, WeeklyOperation } from "../types";
 
-export function useSchedules() {
-  const schedules = useCollection(schedulesCollection);
+interface ScheduleRow {
+  id: string;
+  date: string;
+  type: string;
+  generated_message: string;
+  snapshot: DailyOperation | WeeklyOperation;
+  created_at: string;
+}
 
-  function addSchedule(
+function rowToSchedule(row: ScheduleRow): Schedule {
+  return {
+    id: row.id,
+    date: row.date,
+    type: row.type as ScheduleType,
+    generatedMessage: row.generated_message,
+    snapshot: row.snapshot,
+    createdAt: row.created_at,
+  };
+}
+
+export function useSchedules() {
+  const { rows } = useSupabaseTable<ScheduleRow>("schedules", {
+    column: "created_at",
+    ascending: false,
+  });
+  const schedules = useMemo(() => rows.map(rowToSchedule), [rows]);
+
+  async function addSchedule(
     date: string,
     type: ScheduleType,
     generatedMessage: string,
     snapshot: DailyOperation | WeeklyOperation,
-  ): Schedule {
-    const schedule: Schedule = {
-      id: uuid(),
+  ): Promise<void> {
+    const { error } = await supabase.from("schedules").insert({
       date,
       type,
-      generatedMessage,
+      generated_message: generatedMessage,
       snapshot,
-      createdAt: new Date().toISOString(),
-    };
-    schedulesCollection.update((current) => [schedule, ...current]);
-    return schedule;
+    });
+    if (error) throw error;
   }
 
-  function removeSchedule(id: string): void {
-    schedulesCollection.update((current) => current.filter((s) => s.id !== id));
+  async function removeSchedule(id: string): Promise<void> {
+    const { error } = await supabase.from("schedules").delete().eq("id", id);
+    if (error) throw error;
   }
 
-  const sorted = [...schedules].sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-
-  return { schedules: sorted, addSchedule, removeSchedule };
+  return { schedules, addSchedule, removeSchedule };
 }
