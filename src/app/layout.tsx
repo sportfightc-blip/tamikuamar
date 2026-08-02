@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
 import { ToastProvider } from "@/components/ui/toast";
+import { AuthGate } from "@/components/auth/AuthGate";
 import { withBasePath } from "@/lib/basePath";
 
 const geistSans = Geist({
@@ -44,7 +45,9 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${geistSans.variable} h-full antialiased`}>
       <body className="min-h-full font-sans">
         <ToastProvider>
-          <AppShell>{children}</AppShell>
+          <AuthGate>
+            <AppShell>{children}</AppShell>
+          </AuthGate>
         </ToastProvider>
       </body>
     </html>

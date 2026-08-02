@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { LogOut } from "lucide-react";
 import { Drawer } from "@/components/ui/Drawer";
 import { Button } from "@/components/ui/Button";
 import { useSettings } from "@/lib/hooks/useSettings";
+import { useSession } from "@/lib/hooks/useSession";
 import { useToast } from "@/components/ui/toast";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { supabase } from "@/lib/supabase/client";
 
 export function SettingsDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { settings, updateSettings } = useSettings();
+  const { signOut } = useSession();
   const { show } = useToast();
   const [form, setForm] = useState(settings);
   const [confirmClear, setConfirmClear] = useState(false);
@@ -98,6 +101,13 @@ export function SettingsDrawer({ open, onClose }: { open: boolean; onClose: () =
             className="mt-2 text-left text-sm font-medium text-alert-600"
           >
             Limpar todos os dados
+          </button>
+
+          <button
+            onClick={() => signOut()}
+            className="flex items-center gap-1.5 text-left text-sm font-medium text-foreground/60"
+          >
+            <LogOut size={15} /> Sair
           </button>
         </div>
       </Drawer>
