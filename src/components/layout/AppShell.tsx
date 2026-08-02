@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useState } from "react";
+import Image from "next/image";
 import { Settings } from "lucide-react";
 import { Sidebar } from "./Sidebar";
 import { MobileBottomNav } from "./MobileBottomNav";
@@ -17,11 +18,13 @@ export function AppShell({ children }: { children: ReactNode }) {
       <Sidebar onOpenSettings={() => setSettingsOpen(true)} />
 
       <div className="relative flex min-h-dvh flex-1 flex-col bg-forest-900">
-        <img
+        <Image
           src="/logo-mark.png"
           alt=""
           aria-hidden
-          className="pointer-events-none fixed bottom-[-30px] right-[-20px] z-0 w-[220px] opacity-95 sm:bottom-[-40px] sm:right-[-30px] sm:w-[340px]"
+          width={340}
+          height={340}
+          className="pointer-events-none fixed bottom-[-30px] right-[-20px] z-0 h-auto w-[220px] opacity-95 sm:bottom-[-40px] sm:right-[-30px] sm:w-[340px]"
         />
 
         <header className="relative z-10 flex items-center justify-between border-b border-sand-200 bg-white/70 px-4 py-3 sm:hidden">
