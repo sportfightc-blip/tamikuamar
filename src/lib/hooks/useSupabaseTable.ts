@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase/client";
 
+let channelCounter = 0;
+
 /**
  * Mantém uma tabela do Supabase em memória, sincronizada em tempo real:
  * carrega o estado inicial e escuta inserts/updates/deletes via Realtime,
@@ -30,8 +32,14 @@ export function useSupabaseTable<Row extends { id: string | number }>(
 
     load();
 
+    // Cada instância deste hook precisa de um canal próprio: se duas partes
+    // da tela (ex: sidebar + cabeçalho) usarem a mesma tabela ao mesmo tempo,
+    // reaproveitar o mesmo nome de canal faz o Supabase reutilizar o canal já
+    // inscrito e o segundo `.on()` lança "cannot add callbacks after
+    // subscribe()", derrubando a página inteira.
+    const channelName = `public:${table}:${++channelCounter}`;
     const channel = supabase
-      .channel(`public:${table}`)
+      .channel(channelName)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table },
