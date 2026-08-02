@@ -5,6 +5,9 @@ const repoBasePath = "/tamikuamar";
 
 const nextConfig: NextConfig = {
   images: { unoptimized: true },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isGithubPages ? repoBasePath : "",
+  },
   ...(isGithubPages
     ? {
         output: "export",

@@ -8,6 +8,7 @@ import { MobileBottomNav } from "./MobileBottomNav";
 import { SettingsDrawer } from "@/components/settings/SettingsDrawer";
 import { useSettings } from "@/lib/hooks/useSettings";
 import { Logo } from "@/components/ui/Logo";
+import { withBasePath } from "@/lib/basePath";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -19,7 +20,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <div className="relative flex min-h-dvh flex-1 flex-col bg-forest-900">
         <Image
-          src="/logo-mark.png"
+          src={withBasePath("/logo-mark.png")}
           alt=""
           aria-hidden
           width={340}
