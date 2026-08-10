@@ -47,11 +47,7 @@ export function getGuestsForBreakfast(date: string, stays: Stay[]): Stay[] {
   );
 }
 
-export function getBreakfastTotals(
-  date: string,
-  stays: Stay[],
-  peoplePerTable: number,
-): BreakfastTotals {
+export function getBreakfastTotals(date: string, stays: Stay[]): BreakfastTotals {
   const guests = getGuestsForBreakfast(date, stays);
   const items: BreakfastGuest[] = guests
     .map((s) => ({
@@ -63,7 +59,8 @@ export function getBreakfastTotals(
     .sort((a, b) => a.roomName.localeCompare(b.roomName, "pt-BR"));
 
   const totalPeople = items.reduce((sum, g) => sum + g.people, 0);
-  const totalTables = totalPeople > 0 ? Math.ceil(totalPeople / peoplePerTable) : 0;
+  // 1 mesa por quarto com café — quartos diferentes não dividem mesa.
+  const totalTables = items.length;
 
   return { totalPeople, totalTables, guests: items };
 }
@@ -136,7 +133,7 @@ export function hasBookingConflict(
 }
 
 export function getDailyOperation(date: string, stays: Stay[], settings: Settings): DailyOperation {
-  const breakfast = getBreakfastTotals(date, stays, settings.peoplePerTable);
+  const breakfast = getBreakfastTotals(date, stays);
   const cleaning = getCleaningTasks(date, stays);
 
   const checkoutStays = getCheckouts(date, stays);

@@ -18,7 +18,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="flex min-h-dvh bg-background">
       <Sidebar onOpenSettings={() => setSettingsOpen(true)} />
 
-      <div className="relative flex min-h-dvh flex-1 flex-col bg-forest-900">
+      <div className="relative flex min-h-dvh min-w-0 flex-1 flex-col bg-forest-900">
         <Image
           src={withBasePath("/logo-mark.png")}
           alt=""
@@ -42,8 +42,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           </button>
         </header>
 
-        <main className="relative z-10 flex-1 pb-24 sm:pb-8">
-          <div className="mx-auto w-full max-w-3xl px-4 py-6 sm:px-8">{children}</div>
+        <main className="relative z-10 min-w-0 flex-1 pb-24 sm:pb-8">
+          <div className="mx-auto w-full max-w-3xl min-w-0 px-4 py-6 sm:px-8">{children}</div>
         </main>
       </div>
 

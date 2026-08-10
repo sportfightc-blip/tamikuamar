@@ -7,10 +7,12 @@ import { StayInput } from "@/lib/hooks/useStays";
 import { todayISO, formatShortDatePt } from "@/lib/dates";
 import { formatPeopleCount } from "@/lib/format";
 import { stayPeopleCount } from "@/lib/operations";
-import { Stay } from "@/lib/types";
+import { ROOMS } from "@/lib/rooms";
+import { RoomId, Stay } from "@/lib/types";
 
 export function StayForm({
   initial,
+  initialRoomId,
   defaultCheckInTime,
   defaultCheckOutTime,
   checkConflict,
@@ -20,14 +22,16 @@ export function StayForm({
   submitLabel = "Salvar",
 }: {
   initial?: Partial<StayInput>;
+  initialRoomId: RoomId;
   defaultCheckInTime: string;
   defaultCheckOutTime: string;
-  checkConflict?: (checkInDate: string, checkOutDate: string) => Stay | null;
+  checkConflict?: (roomId: RoomId, checkInDate: string, checkOutDate: string) => Stay | null;
   onSubmit: (input: StayInput) => void;
   onCancel: () => void;
   onCancelConflictingStay?: (stay: Stay) => void;
   submitLabel?: string;
 }) {
+  const [roomId, setRoomId] = useState<RoomId>(initialRoomId);
   const [guestName, setGuestName] = useState(initial?.guestName ?? "");
   const [adults, setAdults] = useState(initial?.adults ?? 2);
   const [children, setChildren] = useState(initial?.children ?? 0);
@@ -38,12 +42,15 @@ export function StayForm({
   const [notes, setNotes] = useState(initial?.notes ?? "");
 
   const dateError = checkOutDate <= checkInDate ? "A saída deve ser depois da entrada." : null;
-  const conflictingStay = !dateError ? checkConflict?.(checkInDate, checkOutDate) ?? null : null;
+  const conflictingStay = !dateError
+    ? checkConflict?.(roomId, checkInDate, checkOutDate) ?? null
+    : null;
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (dateError || !guestName.trim()) return;
     onSubmit({
+      roomId,
       guestName: guestName.trim(),
       adults,
       children,
@@ -52,11 +59,25 @@ export function StayForm({
       checkInTime,
       checkOutTime,
       notes,
-    } as StayInput);
+    });
   }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <Field label="Quarto">
+        <select
+          className="input"
+          value={roomId}
+          onChange={(e) => setRoomId(e.target.value as RoomId)}
+        >
+          {ROOMS.map((r) => (
+            <option key={r.id} value={r.id}>
+              {r.name}
+            </option>
+          ))}
+        </select>
+      </Field>
+
       <Field label="Nome do hóspede">
         <input
           className="input"

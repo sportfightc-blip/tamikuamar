@@ -70,17 +70,6 @@ export function SettingsDrawer({ open, onClose }: { open: boolean; onClose: () =
               />
             </Field>
           </div>
-          <Field label="Pessoas por mesa">
-            <input
-              type="number"
-              min={1}
-              className="input"
-              value={form.peoplePerTable}
-              onChange={(e) =>
-                setForm({ ...form, peoplePerTable: Math.max(1, Number(e.target.value)) })
-              }
-            />
-          </Field>
           <Field label="Mensagem inicial">
             <textarea
               className="input min-h-[70px]"

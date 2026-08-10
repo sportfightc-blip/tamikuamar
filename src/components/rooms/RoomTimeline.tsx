@@ -91,7 +91,7 @@ export function RoomTimeline({
         </div>
       </div>
 
-      <div className="flex">
+      <div className="flex min-w-0">
         <div className="w-20 shrink-0 border-r border-sand-200">
           <div className="h-6 border-b border-sand-200/60" />
           <div className="h-8 border-b border-sand-200" />
@@ -106,7 +106,7 @@ export function RoomTimeline({
           ))}
         </div>
 
-        <div className="flex-1 overflow-x-auto">
+        <div className="min-w-0 flex-1 overflow-x-auto">
           <div style={{ width: numDays * DAY_WIDTH }}>
             <div className="flex h-6 border-b border-sand-200/60">
               {Array.from({ length: numDays }, (_, i) => i + 1).map((dayNum) => {

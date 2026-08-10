@@ -46,9 +46,12 @@ export function StayEditDrawer({
         <div className="flex flex-col gap-4">
           <StayForm
             initial={stay}
+            initialRoomId={stay.roomId}
             defaultCheckInTime={settings.defaultCheckInTime}
             defaultCheckOutTime={settings.defaultCheckOutTime}
-            checkConflict={(ci, co) => findConflictingStay(stay.roomId, ci, co, stays, stay.id)}
+            checkConflict={(roomId, ci, co) =>
+              findConflictingStay(roomId, ci, co, stays, stay.id)
+            }
             onSubmit={handleSubmit}
             onCancel={onClose}
             onCancelConflictingStay={handleCancelConflict}

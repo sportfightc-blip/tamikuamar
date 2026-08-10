@@ -40,7 +40,7 @@ export function RoomDrawer({
       updateStay(stay.id, input);
       show("Hospedagem salva");
     } else {
-      addStay({ ...input, roomId: room.id });
+      addStay(input);
       show("Hospedagem salva");
       setCreatingNew(false);
     }
@@ -97,9 +97,12 @@ export function RoomDrawer({
 
             <StayForm
               initial={stay}
+              initialRoomId={room.id}
               defaultCheckInTime={settings.defaultCheckInTime}
               defaultCheckOutTime={settings.defaultCheckOutTime}
-              checkConflict={(ci, co) => findConflictingStay(room.id, ci, co, stays, stay.id)}
+              checkConflict={(roomId, ci, co) =>
+                findConflictingStay(roomId, ci, co, stays, stay.id)
+              }
               onSubmit={handleSubmit}
               onCancel={onClose}
               onCancelConflictingStay={handleCancelConflict}
@@ -126,9 +129,10 @@ export function RoomDrawer({
           </div>
         ) : (
           <StayForm
+            initialRoomId={room.id}
             defaultCheckInTime={settings.defaultCheckInTime}
             defaultCheckOutTime={settings.defaultCheckOutTime}
-            checkConflict={(ci, co) => findConflictingStay(room.id, ci, co, stays)}
+            checkConflict={(roomId, ci, co) => findConflictingStay(roomId, ci, co, stays)}
             onSubmit={handleSubmit}
             onCancel={() => (creatingNew ? setCreatingNew(false) : onClose())}
             onCancelConflictingStay={handleCancelConflict}
