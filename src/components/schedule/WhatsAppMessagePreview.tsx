@@ -10,7 +10,7 @@ export function WhatsAppMessagePreview({
   onSave,
 }: {
   initialMessage: string;
-  onSave: (finalMessage: string) => void;
+  onSave: (finalMessage: string) => Promise<void>;
 }) {
   const [message, setMessage] = useState(initialMessage);
   const { show } = useToast();
@@ -29,6 +29,15 @@ export function WhatsAppMessagePreview({
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
+  async function save() {
+    try {
+      await onSave(message);
+      show("Cronograma salvo");
+    } catch {
+      show("Não foi possível salvar o cronograma", "error");
+    }
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <textarea
@@ -43,12 +52,7 @@ export function WhatsAppMessagePreview({
         <Button variant="secondary" onClick={openWhatsApp}>
           <Send size={16} /> Abrir WhatsApp
         </Button>
-        <Button
-          onClick={() => {
-            onSave(message);
-            show("Cronograma salvo");
-          }}
-        >
+        <Button onClick={save}>
           <Save size={16} /> Salvar
         </Button>
       </div>

@@ -23,8 +23,8 @@ export function WeeklySchedulePreview({
     <Drawer open={open} onClose={onClose} title="Cronograma da semana">
       <WhatsAppMessagePreview
         initialMessage={message}
-        onSave={(finalMessage) => {
-          addSchedule(startDate, "weekly", finalMessage, weekly);
+        onSave={async (finalMessage) => {
+          await addSchedule(startDate, "weekly", finalMessage, weekly);
           onClose();
         }}
       />

@@ -25,15 +25,23 @@ export function NewStayDrawer({
   const { settings } = useSettings();
   const { show } = useToast();
 
-  function handleSubmit(input: StayInput) {
-    addStay(input);
-    show("Hospedagem salva");
-    onClose();
+  async function handleSubmit(input: StayInput) {
+    try {
+      await addStay(input);
+      show("Hospedagem salva");
+      onClose();
+    } catch {
+      show("Não foi possível salvar a hospedagem", "error");
+    }
   }
 
-  function handleCancelConflict(conflictStay: Stay) {
-    releaseStay(conflictStay.id);
-    show("Hospedagem conflitante cancelada");
+  async function handleCancelConflict(conflictStay: Stay) {
+    try {
+      await releaseStay(conflictStay.id);
+      show("Hospedagem conflitante cancelada");
+    } catch {
+      show("Não foi possível cancelar a hospedagem", "error");
+    }
   }
 
   return (

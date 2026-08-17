@@ -80,13 +80,18 @@ export default function HistoricoPage() {
         confirmLabel="Excluir"
         danger
         onCancel={() => setConfirmDelete(null)}
-        onConfirm={() => {
-          if (confirmDelete) {
-            removeSchedule(confirmDelete.id);
-            setSelected(null);
+        onConfirm={async () => {
+          try {
+            if (confirmDelete) {
+              await removeSchedule(confirmDelete.id);
+              setSelected(null);
+            }
+            show("Cronograma excluído");
+          } catch {
+            show("Não foi possível excluir o cronograma", "error");
+          } finally {
+            setConfirmDelete(null);
           }
-          setConfirmDelete(null);
-          show("Cronograma excluído");
         }}
       />
     </div>

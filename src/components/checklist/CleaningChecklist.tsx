@@ -2,11 +2,21 @@ import { CheckCircle2 } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { TaskItem } from "./TaskItem";
-import { CleaningItem } from "@/lib/types";
+import { CleaningItem, CleaningType, RoomId } from "@/lib/types";
 import { useTaskCompletions } from "@/lib/hooks/useTaskCompletions";
+import { useToast } from "@/components/ui/toast";
 
 export function CleaningChecklist({ date, cleaning }: { date: string; cleaning: CleaningItem[] }) {
   const { isCompleted, getCompletedAt, toggleTask } = useTaskCompletions();
+  const { show } = useToast();
+
+  async function handleToggle(roomId: RoomId, type: CleaningType) {
+    try {
+      await toggleTask(date, roomId, type);
+    } catch {
+      show("Não foi possível atualizar a tarefa", "error");
+    }
+  }
 
   const byRoom = new Map<string, { roomName: string; items: CleaningItem[] }>();
   for (const item of cleaning) {
@@ -36,7 +46,7 @@ export function CleaningChecklist({ date, cleaning }: { date: string; cleaning: 
                   item={item}
                   completed={isCompleted(date, item.roomId, item.type)}
                   completedAt={getCompletedAt(date, item.roomId, item.type)}
-                  onToggle={() => toggleTask(date, item.roomId, item.type)}
+                  onToggle={() => handleToggle(item.roomId, item.type)}
                 />
               ))}
             </div>

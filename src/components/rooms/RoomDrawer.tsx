@@ -35,21 +35,28 @@ export function RoomDrawer({
   const stay = statusInfo.currentStay;
   const showForm = !stay || creatingNew;
 
-  function handleSubmit(input: StayInput) {
-    if (stay && !creatingNew) {
-      updateStay(stay.id, input);
+  async function handleSubmit(input: StayInput) {
+    try {
+      if (stay && !creatingNew) {
+        await updateStay(stay.id, input);
+      } else {
+        await addStay(input);
+        setCreatingNew(false);
+      }
       show("Hospedagem salva");
-    } else {
-      addStay(input);
-      show("Hospedagem salva");
-      setCreatingNew(false);
+      onClose();
+    } catch {
+      show("Não foi possível salvar a hospedagem", "error");
     }
-    onClose();
   }
 
-  function handleCancelConflict(conflictStay: Stay) {
-    releaseStay(conflictStay.id);
-    show("Hospedagem conflitante cancelada");
+  async function handleCancelConflict(conflictStay: Stay) {
+    try {
+      await releaseStay(conflictStay.id);
+      show("Hospedagem conflitante cancelada");
+    } catch {
+      show("Não foi possível cancelar a hospedagem", "error");
+    }
   }
 
   return (
@@ -148,11 +155,16 @@ export function RoomDrawer({
         confirmLabel="Liberar quarto"
         danger
         onCancel={() => setConfirmRelease(false)}
-        onConfirm={() => {
-          if (stay) releaseStay(stay.id);
-          setConfirmRelease(false);
-          show("Quarto liberado");
-          onClose();
+        onConfirm={async () => {
+          try {
+            if (stay) await releaseStay(stay.id);
+            show("Quarto liberado");
+            onClose();
+          } catch {
+            show("Não foi possível liberar o quarto", "error");
+          } finally {
+            setConfirmRelease(false);
+          }
         }}
       />
 
@@ -163,10 +175,15 @@ export function RoomDrawer({
         confirmLabel="Cancelar hospedagem"
         danger
         onCancel={() => setConfirmCancelNext(false)}
-        onConfirm={() => {
-          if (statusInfo.nextStay) releaseStay(statusInfo.nextStay.id);
-          setConfirmCancelNext(false);
-          show("Hospedagem cancelada");
+        onConfirm={async () => {
+          try {
+            if (statusInfo.nextStay) await releaseStay(statusInfo.nextStay.id);
+            show("Hospedagem cancelada");
+          } catch {
+            show("Não foi possível cancelar a hospedagem", "error");
+          } finally {
+            setConfirmCancelNext(false);
+          }
         }}
       />
     </>

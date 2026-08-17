@@ -29,15 +29,23 @@ export function StayEditDrawer({
 
   if (!stay) return null;
 
-  function handleSubmit(input: StayInput) {
-    updateStay(stay!.id, input);
-    show("Hospedagem salva");
-    onClose();
+  async function handleSubmit(input: StayInput) {
+    try {
+      await updateStay(stay!.id, input);
+      show("Hospedagem salva");
+      onClose();
+    } catch {
+      show("Não foi possível salvar a hospedagem", "error");
+    }
   }
 
-  function handleCancelConflict(conflictStay: Stay) {
-    releaseStay(conflictStay.id);
-    show("Hospedagem conflitante cancelada");
+  async function handleCancelConflict(conflictStay: Stay) {
+    try {
+      await releaseStay(conflictStay.id);
+      show("Hospedagem conflitante cancelada");
+    } catch {
+      show("Não foi possível cancelar a hospedagem", "error");
+    }
   }
 
   return (
@@ -71,11 +79,16 @@ export function StayEditDrawer({
         confirmLabel="Cancelar hospedagem"
         danger
         onCancel={() => setConfirmRelease(false)}
-        onConfirm={() => {
-          releaseStay(stay.id);
-          setConfirmRelease(false);
-          show("Hospedagem cancelada");
-          onClose();
+        onConfirm={async () => {
+          try {
+            await releaseStay(stay.id);
+            show("Hospedagem cancelada");
+            onClose();
+          } catch {
+            show("Não foi possível cancelar a hospedagem", "error");
+          } finally {
+            setConfirmRelease(false);
+          }
         }}
       />
     </>

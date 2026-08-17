@@ -21,10 +21,14 @@ export function SettingsDrawer({ open, onClose }: { open: boolean; onClose: () =
     if (open) setForm(settings);
   }, [open, settings]);
 
-  function save() {
-    updateSettings(form);
-    show("Configurações salvas");
-    onClose();
+  async function save() {
+    try {
+      await updateSettings(form);
+      show("Configurações salvas");
+      onClose();
+    } catch {
+      show("Não foi possível salvar", "error");
+    }
   }
 
   return (

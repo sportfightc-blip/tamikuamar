@@ -22,11 +22,11 @@ export function MovementCard({
         <EmptyState message="Nenhuma entrada ou saída hoje." />
       ) : (
         <div className="flex flex-col gap-3">
-          {checkouts.length > 0 && (
-            <div>
-              <p className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-alert-600">
-                <LogOut size={14} /> Saída
-              </p>
+          <div>
+            <p className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-alert-600">
+              <LogOut size={14} /> Saída
+            </p>
+            {checkouts.length > 0 ? (
               <ul className="flex flex-col gap-1">
                 {checkouts.map((m) => (
                   <li key={m.roomId} className="flex justify-between text-sm">
@@ -35,13 +35,16 @@ export function MovementCard({
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
-          {checkins.length > 0 && (
-            <div>
-              <p className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-sea-700">
-                <LogIn size={14} /> Entrada
-              </p>
+            ) : (
+              <p className="text-sm text-foreground/45">Nenhuma saída hoje.</p>
+            )}
+          </div>
+
+          <div>
+            <p className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-sea-700">
+              <LogIn size={14} /> Entrada
+            </p>
+            {checkins.length > 0 ? (
               <ul className="flex flex-col gap-1">
                 {checkins.map((m) => (
                   <li key={m.roomId} className="flex justify-between text-sm">
@@ -50,8 +53,11 @@ export function MovementCard({
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
+            ) : (
+              <p className="text-sm text-foreground/45">Nenhuma entrada hoje.</p>
+            )}
+          </div>
+
           {occupied.length > 0 && (
             <div>
               <p className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-ok-600">

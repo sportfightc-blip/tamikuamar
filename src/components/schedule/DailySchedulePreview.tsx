@@ -28,8 +28,8 @@ export function DailySchedulePreview({
     >
       <WhatsAppMessagePreview
         initialMessage={message}
-        onSave={(finalMessage) => {
-          addSchedule(date, "daily", finalMessage, operation);
+        onSave={async (finalMessage) => {
+          await addSchedule(date, "daily", finalMessage, operation);
           onClose();
         }}
       />
