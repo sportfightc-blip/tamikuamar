@@ -1,0 +1,3 @@
+:HL["/tamikuamar/_next/static/chunks/0r8j58wry1w10.css","style"]
+:HL["/tamikuamar/_next/static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"checkins","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"u8nPrm5dVal7B8fNijSm0"}

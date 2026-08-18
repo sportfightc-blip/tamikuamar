@@ -1,9 +1,9 @@
 1:"$Sreact.fragment"
-2:I[47257,["/tamikuamar/_next/static/chunks/3jts-a-944ln2.js","/tamikuamar/_next/static/chunks/3ee_vzb2zyl_n.js","/tamikuamar/_next/static/chunks/04av-_71iky7m.js","/tamikuamar/_next/static/chunks/14mrh2-p_w84d.js"],"ClientPageRoot"]
-3:I[23047,["/tamikuamar/_next/static/chunks/3jts-a-944ln2.js","/tamikuamar/_next/static/chunks/3ee_vzb2zyl_n.js","/tamikuamar/_next/static/chunks/04av-_71iky7m.js","/tamikuamar/_next/static/chunks/14mrh2-p_w84d.js","/tamikuamar/_next/static/chunks/3o3vkllgemkgy.js"],"default"]
-6:I[97367,["/tamikuamar/_next/static/chunks/3jts-a-944ln2.js","/tamikuamar/_next/static/chunks/3ee_vzb2zyl_n.js","/tamikuamar/_next/static/chunks/04av-_71iky7m.js","/tamikuamar/_next/static/chunks/14mrh2-p_w84d.js"],"OutletBoundary"]
+2:I[47257,["/tamikuamar/_next/static/chunks/293qs0rsxi_37.js","/tamikuamar/_next/static/chunks/3p37achusol6y.js","/tamikuamar/_next/static/chunks/04av-_71iky7m.js","/tamikuamar/_next/static/chunks/14mrh2-p_w84d.js"],"ClientPageRoot"]
+3:I[23047,["/tamikuamar/_next/static/chunks/293qs0rsxi_37.js","/tamikuamar/_next/static/chunks/3p37achusol6y.js","/tamikuamar/_next/static/chunks/04av-_71iky7m.js","/tamikuamar/_next/static/chunks/14mrh2-p_w84d.js","/tamikuamar/_next/static/chunks/0x98i16afnnrv.js"],"default"]
+6:I[97367,["/tamikuamar/_next/static/chunks/293qs0rsxi_37.js","/tamikuamar/_next/static/chunks/3p37achusol6y.js","/tamikuamar/_next/static/chunks/04av-_71iky7m.js","/tamikuamar/_next/static/chunks/14mrh2-p_w84d.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/tamikuamar/_next/static/chunks/3o3vkllgemkgy.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"VZ59_zQ-pMw5B9x1GUlUG"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/tamikuamar/_next/static/chunks/0x98i16afnnrv.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"u8nPrm5dVal7B8fNijSm0"}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null
